@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Optical Transfer</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/ui/style.css" />
+    <style>
+      main { max-width: 640px; margin: 48px auto; padding: 0 16px; display: grid; gap: 14px; }
+      .card { display: block; text-decoration: none; color: inherit; }
+      .card:hover { border-color: var(--accent); }
+      .card b { display: block; font-size: 16px; margin-bottom: 2px; color: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Optical Transfer</h1>
+      <p class="muted">Move a file between two machines using only a screen and a camera. One-way: the sender loops a fountain-coded stream of QR codes until the receiver has enough of them.</p>
+      <a class="panel card" href="./send/"><b>Send</b>Pick a file and display it as an animated QR stream.</a>
+      <a class="panel card" href="./receive/"><b>Receive</b>Point a camera at the sender's screen; the file is rebuilt, verified with BLAKE3, and saved.</a>
+      <a class="panel card" href="./loopback/"><b>Loopback test</b>Sender and receiver in one page, no camera, with simulated drops and corruption.</a>
+    </main>
+  </body>
+</html>

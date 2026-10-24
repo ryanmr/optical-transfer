@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    image: optical-transfer:latest
+    container_name: optical-transfer
+    restart: unless-stopped
+    ports:
+      # HTTP: fine on this machine (localhost counts as a secure context).
+      - "${PORT:-14471}:14471"
+      # HTTPS: required from any other device, or the camera/OPFS are unavailable.
+      - "${HTTPS_PORT:-14472}:14472"
+    environment:
+      PORT: 14471
+      HTTPS_PORT: 14472
+      # Extra names/IPs for the auto-generated self-signed cert (see .env).
+      TLS_SANS: ${TLS_SANS:-}
+      # To use a real certificate instead, mount it and set:
+      # TLS_CERT_FILE: /certs/cert.pem
+      # TLS_KEY_FILE: /certs/key.pem
+    volumes:
+      - certs:/app/certs
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  certs:

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Optical Transfer · Send</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/src/ui/style.css" />
+    <style>
+      body { overflow: hidden; }
+      canvas#stage { position: fixed; inset: 0; width: 100vw; height: 100vh; display: block; image-rendering: pixelated; }
+      #controls { position: fixed; top: 12px; left: 12px; width: 300px; max-height: calc(100vh - 24px); overflow: auto; display: grid; gap: 10px; z-index: 2; }
+      #status { position: fixed; left: 12px; right: 12px; bottom: 10px; z-index: 2; display: flex; gap: 18px; flex-wrap: wrap; font-size: 12px; color: var(--muted); pointer-events: none; }
+      #status b { color: var(--text); font-weight: 500; }
+      #toggle { position: fixed; top: 12px; right: 12px; z-index: 3; }
+      @media (max-width: 520px) { #controls { width: auto; right: 12px; } }
+    </style>
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+    <button id="toggle" title="Show/hide settings (Esc)">Settings</button>
+    <div id="controls" class="panel">
+      <h1><a href="../" style="text-decoration:none">Optical Transfer</a> · Send</h1>
+      <label class="field">File <input id="file" type="file" /></label>
+      <div class="grid2">
+        <label class="field">Symbol size S (bytes)
+          <select id="S">
+            <option>200</option><option>300</option><option>400</option><option selected>600</option><option>800</option><option>1000</option><option>1400</option><option>2000</option><option>2800</option>
+          </select>
+        </label>
+        <label class="field">QR error correction
+          <select id="ecc"><option value="L" selected>L (7%)</option><option value="M">M (15%)</option><option value="Q">Q (25%)</option><option value="H">H (30%)</option></select>
+        </label>
+        <label class="field">Hold (refreshes/code)
+          <input id="hold" type="number" min="1" max="30" value="3" />
+        </label>
+        <label class="field">Code size (px, 0 = fit)
+          <input id="codeSize" type="number" min="0" step="50" value="0" />
+        </label>
+        <label class="field">Manifest every N frames
+          <input id="manifestEvery" type="number" min="2" max="500" value="20" />
+        </label>
+        <label class="field">Theme
+          <select id="theme"><option value="dark" selected>Dark</option><option value="light">Light</option></select>
+        </label>
+        <label class="field">Compression
+          <select id="compression"><option value="auto" selected>Auto (gzip if smaller)</option><option value="gzip">gzip</option><option value="none">None</option></select>
+        </label>
+      </div>
+      <div class="row">
+        <button id="start" class="primary" disabled>Start</button>
+        <button id="stop" disabled>Stop</button>
+      </div>
+      <dl class="stats" id="info"></dl>
+      <p class="muted" style="margin:0;font-size:12px">Space: start/stop · Esc: settings. Changing S starts a new session; the receiver must be reset or switched.</p>
+    </div>
+    <div id="status"></div>
+    <script type="module" src="/src/ui/send.ts"></script>
+  </body>
+</html>
